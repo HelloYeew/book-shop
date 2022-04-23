@@ -22,5 +22,6 @@ CREATE TABLE IF NOT EXISTS history (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     buyer_id INTEGER NOT NULL,
     book_id INTEGER NOT NULL,
-    FOREIGN KEY (buyer_id) REFERENCES users(id)
+    FOREIGN KEY (buyer_id) REFERENCES users(id),
+    FOREIGN KEY (book_id) REFERENCES books(id)
 );
