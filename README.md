@@ -59,3 +59,7 @@ To check the data in the database without using the database console, you can do
 to open the table inside IntelliJ. To reload the page click `Reload page` button or use `Ctrl + F5` to reload the query result.
 
 ![Query Example](readme-pics/query-example.png)
+
+To reopen the database console, click the database console button, then click `Open default console` to open the database console and IntelliJ will recover the latest SQL query.
+
+![Reopen the database console](readme-pics/reopen-console.png)
