@@ -1,6 +1,6 @@
 -- Schema for create the novel shop database using the SQLite data type
 -- To create the database, run the following command:
--- sqlite3 novelshop.db < schema.sql
+-- sqlite3 bookshop.db < schema.sql
 
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

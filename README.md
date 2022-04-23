@@ -18,7 +18,7 @@ sqlite> .import data/users.csv users # Import user data from CSV file
 sqlite> .import data/books.csv books # Import book data from CSV file
 ```
 
-Note : The `<` symbol cannot be used in a new Windows powershell so if you are using Windows powershell, please run this command in a normal command prompt instead.
+**Note** : The `<` symbol cannot be used in a new Windows powershell so if you are using new Windows powershell as command line, please run this command in a normal Windows command prompt instead.
 
 ## Check and explore the database
 
