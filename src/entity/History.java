@@ -30,6 +30,8 @@ public class History implements Entity {
 
     public static String[] columnName = {"ID", "Buyer Username", "Book Title"};
 
+    public static String[] queryColumnName = {"id", "buyer_id", "book_id"};
+
     /**
      * Create a new history.
      * @param buyer ID of buyer that is foreign key to user table.

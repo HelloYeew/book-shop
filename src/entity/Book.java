@@ -60,6 +60,8 @@ public class Book implements Entity {
 
     public static String[] readableColumnName = {"ID", "Title", "Author", "Genre", "Subgenre", "Pages", "Publisher", "Price"};
 
+    public static String[] queryColumnName = {"id", "title", "author", "genre", "subgenre", "height", "publisher", "price"};
+
     /**
      * Create a new book.
      * @param title Book title.

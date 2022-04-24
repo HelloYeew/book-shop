@@ -8,6 +8,9 @@ import entity.User;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -29,7 +32,7 @@ public class MainGui extends JFrame {
     public MainGui() {
         super("Book shop");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 400);
+        setFocusable(true);
 
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new GridLayout(1, 2));
@@ -50,6 +53,12 @@ public class MainGui extends JFrame {
         JPanel searchPanel = new JPanel();
         searchPanel.setLayout(new FlowLayout());
         searchTextField = new JTextField(20);
+        searchTextField.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                search();
+            }
+        });
         // Set up search button
         String[] bookSearchFields = {"ID", "Title", "Author", "Genre", "Subgenre", "Pages", "Publisher", "Price"};
         searchComboBox = new JComboBox<>(bookSearchFields);
@@ -57,6 +66,7 @@ public class MainGui extends JFrame {
         JButton searchButton = new JButton("Search");
         searchPanel.add(searchTextField);
         searchPanel.add(searchButton);
+        searchButton.addActionListener(e -> search());
         topPanel.add(searchPanel);
         add(topPanel, BorderLayout.NORTH);
 
@@ -81,6 +91,7 @@ public class MainGui extends JFrame {
         add(mainScrollPane, BorderLayout.CENTER);
 
         pack();
+        setSize(1000, 600);
         setVisible(true);
     }
 
@@ -113,6 +124,44 @@ public class MainGui extends JFrame {
             searchTextField.setText("");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void search() {
+        // TODO: Fix improper state change
+        System.out.println("Current state : " + guiState);
+        // If the search text is empty, show all the data instead
+        if (searchTextField.getText().isEmpty()) {
+            if (guiState == GuiState.BOOKS) {
+                changeToBookState();
+            } else if (guiState == GuiState.USERS) {
+                changeToUserState();
+            } else if (guiState == GuiState.HISTORY) {
+                changeToHistoryState();
+            }
+        } else {
+            if (guiState == GuiState.BOOKS) {
+                try {
+                    List<Book> data = daoFactory.getBookDao().queryForEq(Book.readableColumnName[searchComboBox.getSelectedIndex()], searchTextField.getText());
+                    redrawTable(Book.convertToArray(data), Book.readableColumnName);
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else if (guiState == GuiState.USERS) {
+                try {
+                    List<User> data = daoFactory.getUserDao().queryForEq(User.readableColumnName[searchComboBox.getSelectedIndex()], searchTextField.getText());
+                    redrawTable(User.convertToArray(data), User.readableColumnName);
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else if (guiState == GuiState.HISTORY) {
+                try {
+                    List<History> data = daoFactory.getHistoryDao().queryForEq(History.columnName[searchComboBox.getSelectedIndex()], searchTextField.getText());
+                    redrawTable(History.convertToArray(data), History.columnName);
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }
     }
 
