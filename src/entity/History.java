@@ -36,6 +36,10 @@ public class History implements Entity {
         this.book = book;
     }
 
+    public History() {
+
+    }
+
     public int getId() {
         return id;
     }
