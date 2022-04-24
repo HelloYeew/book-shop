@@ -1,5 +1,5 @@
-package Entity;
-import Dao.BookDao;
+package entity;
+import dao.BookDao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
  * Class represent a book in "books" database table.
  */
 @DatabaseTable(tableName = "books", daoClass = BookDao.class)
-public class Book {
+public class Book implements Entity {
     /**
      * Book ID in database. It must autoincrement.
      */
@@ -76,6 +76,10 @@ public class Book {
         this.price = price;
     }
 
+    public Book() {
+
+    }
+
     public int getId() {
         return id;
     }
@@ -134,5 +138,9 @@ public class Book {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String toString() {
+        return "id=" + id + ", title=" + title + ", author=" + author + ", genre=" + genre + ", subgenre=" + subgenre + ", height=" + height + ", publisher=" + publisher + ", price=" + price;
     }
 }

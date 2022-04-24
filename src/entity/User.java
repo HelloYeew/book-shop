@@ -1,5 +1,5 @@
-package Entity;
-import Dao.UserDao;
+package entity;
+import dao.UserDao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
  * Class represent user in the "users" database table.
  */
 @DatabaseTable(tableName = "users", daoClass = UserDao.class)
-public class User {
+public class User implements Entity {
     /**
      * User's ID in database. It is autoincremented.
      */
@@ -28,6 +28,10 @@ public class User {
         this.username = username;
     }
 
+    public User() {
+
+    }
+
     public int getId() {
         return id;
     }
@@ -38,5 +42,9 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String toString() {
+        return this.id + username;
     }
 }

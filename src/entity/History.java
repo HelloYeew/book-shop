@@ -1,5 +1,5 @@
-package Entity;
-import Dao.HistoryDao;
+package entity;
+import dao.HistoryDao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
  * Class represent history of the shop.
  */
 @DatabaseTable(tableName = "history", daoClass = HistoryDao.class)
-public class History {
+public class History implements Entity {
     /**
      * History ID in database.
      */
@@ -34,5 +34,21 @@ public class History {
     public History(User buyer, Book book) {
         this.buyer = buyer;
         this.book = book;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public User getBuyer() {
+        return buyer;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public String toString() {
+        return "History: " + this.id + " " + this.buyer.getUsername() + " " + this.book.getTitle();
     }
 }
