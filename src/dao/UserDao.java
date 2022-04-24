@@ -1,6 +1,5 @@
 package dao;
 
-import entity.History;
 import entity.User;
 import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.support.ConnectionSource;
@@ -13,6 +12,18 @@ public class UserDao extends BaseDaoImpl<User, Integer> implements DaoInstance {
         super(connectionSource, User.class);
     }
 
+    public List<User> getAll() throws SQLException {
+        return this.queryForAll();
+    }
+
+    public Object[][] convertToArray(List<User> users) {
+        Object[][] data = new Object[users.size()][];
+        for (int i = 0; i < users.size(); i++) {
+            User user = users.get(i);
+            data[i] = new Object[]{user.getId(), user.getUsername()};
+        }
+        return data;
+    }
 
     /**
      * Return 2D array that can be render to table in GUI.
@@ -22,12 +33,6 @@ public class UserDao extends BaseDaoImpl<User, Integer> implements DaoInstance {
      */
     @Override
     public Object[][] getAllAsArray() throws SQLException {
-        List<User> users = this.queryForAll();
-        Object[][] data = new Object[users.size()][];
-        for (int i = 0; i < users.size(); i++) {
-            User user = users.get(i);
-            data[i] = new Object[]{user.getId(), user.getUsername()};
-        }
-        return data;
+        return convertToArray(getAll());
     }
 }

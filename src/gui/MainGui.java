@@ -17,23 +17,43 @@ public class MainGui extends JFrame {
 
     private JLabel countLabel = new JLabel("Count : ");
 
+    private GuiState guiState = GuiState.BOOKS;
+    private JComboBox<String> searchComboBox;
+
+    private JTextField searchTextField;
+
     public MainGui() {
         super("Book shop");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 400);
-        setVisible(true);
 
         JPanel topPanel = new JPanel();
-        topPanel.setLayout(new FlowLayout());
-        JButton showAllBooksButton = new JButton("Show all books");
-        showAllBooksButton.addActionListener(e -> showAllBooks());
-        topPanel.add(showAllBooksButton);
-        JButton showAllUserButton = new JButton("Show all users");
+        topPanel.setLayout(new GridLayout(1, 2));
+
+        JPanel buttonTopPanel = new JPanel();
+        buttonTopPanel.setLayout(new FlowLayout());
+        JButton showAllBooksButton = new JButton("Books");
+        showAllBooksButton.addActionListener(e -> changeToBookState());
+        buttonTopPanel.add(showAllBooksButton);
+        JButton showAllUserButton = new JButton("Users");
         showAllUserButton.addActionListener(e -> showAllUser());
-        topPanel.add(showAllUserButton);
-        JButton showAllHistoryButton = new JButton("Show all history");
+        buttonTopPanel.add(showAllUserButton);
+        JButton showAllHistoryButton = new JButton("History");
         showAllHistoryButton.addActionListener(e -> showAllHistory());
-        topPanel.add(showAllHistoryButton);
+        buttonTopPanel.add(showAllHistoryButton);
+        topPanel.add(buttonTopPanel);
+        // Add search text field below
+        JPanel searchPanel = new JPanel();
+        searchPanel.setLayout(new FlowLayout());
+        searchTextField = new JTextField(20);
+        // Set up search button
+        String[] bookSearchFields = {"ID", "Title", "Author", "Genre", "Subgenre", "Pages", "Publisher", "Price"};
+        searchComboBox = new JComboBox<>(bookSearchFields);
+        searchPanel.add(searchComboBox);
+        JButton searchButton = new JButton("Search");
+        searchPanel.add(searchTextField);
+        searchPanel.add(searchButton);
+        topPanel.add(searchPanel);
         add(topPanel, BorderLayout.NORTH);
 
         JPanel bottomPanel = new JPanel();
@@ -57,13 +77,17 @@ public class MainGui extends JFrame {
         add(mainScrollPane, BorderLayout.CENTER);
 
         pack();
+        setVisible(true);
     }
 
-    private void showAllBooks() {
+    private void changeToBookState() {
         try {
+            guiState = GuiState.BOOKS;
             Object[][] data = daoFactory.getDaoInstance("Book").getAllAsArray();
             String[] columnNames = {"ID", "Title", "Author", "Genre", "Subgenre", "Pages", "Publisher", "Price"};
             redrawTable(data, columnNames);
+            redrawComboBox(columnNames);
+            searchTextField.setText("");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -71,9 +95,12 @@ public class MainGui extends JFrame {
 
     private void showAllUser() {
         try {
+            guiState = GuiState.USERS;
             Object[][] data = daoFactory.getDaoInstance("User").getAllAsArray();
             String[] columnNames = {"ID", "Username"};
             redrawTable(data, columnNames);
+            redrawComboBox(columnNames);
+            searchTextField.setText("");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -81,9 +108,12 @@ public class MainGui extends JFrame {
 
     private void showAllHistory() {
         try {
+            guiState = GuiState.HISTORY;
             Object[][] data = daoFactory.getDaoInstance("History").getAllAsArray();
             String[] columnNames = {"ID", "Buyer Username", "Book Title"};
             redrawTable(data, columnNames);
+            redrawComboBox(columnNames);
+            searchTextField.setText("");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -94,8 +124,13 @@ public class MainGui extends JFrame {
         mainTable.setModel(new DefaultTableModel(data, columnNames));
         mainScrollPane.setViewportView(mainTable);
         countLabel.setText("Count : " + data.length);
-        // Update count label
-        repaint();
+    }
+
+    private void redrawComboBox(String[] items) {
+        searchComboBox.removeAllItems();
+        for (String item : items) {
+            searchComboBox.addItem(item);
+        }
     }
 
     public static void main(String[] args) {

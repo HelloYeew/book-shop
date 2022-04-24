@@ -1,6 +1,5 @@
 package dao;
 
-import entity.Book;
 import entity.History;
 import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.support.ConnectionSource;
@@ -13,14 +12,27 @@ public class HistoryDao extends BaseDaoImpl<History, Integer> implements DaoInst
         super(connectionSource, History.class);
     }
 
-    @Override
-    public Object[][] getAllAsArray() throws SQLException {
-        List<History> histories = this.queryForAll();
+    public List<History> getAll() throws SQLException {
+        return this.queryForAll();
+    }
+
+    public Object[][] convertToArray(List<History> histories) {
         Object[][] data = new Object[histories.size()][];
         for (int i = 0; i < histories.size(); i++) {
             History history = histories.get(i);
             data[i] = new Object[]{history.getId(), history.getBuyer().getUsername(), history.getBook().getTitle()};
         }
         return data;
+    }
+
+    /**
+     * Return 2D array that can be render to table in GUI.
+     *
+     * @return 2D array that can be render to table in GUI.
+     * @throws SQLException if SQL query failed.
+     */
+    @Override
+    public Object[][] getAllAsArray() throws SQLException {
+        return convertToArray(getAll());
     }
 }
