@@ -43,7 +43,7 @@ CREATE TABLE books (
 sqlite> SELECT * FROM books; # Show all the books
 ```
 
-For IntelliJ IDEA Ultimate Edition, you can use the database functions that's available inside the IDE to explore the database too
+For IntelliJ IDEA Ultimate, you can use the database functions that's available inside the IDE to explore the database too
 by clicking on the `Database` tab in the left panel, then drag and drop the `bookshop.db` file into the `Database` panel.
 If you can't drag and drop, just click the plus sign at left-top corner of the `Database` panel then `Data Source > SQLite` and select the `bookshop.db` file.
 
