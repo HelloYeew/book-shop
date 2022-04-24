@@ -23,28 +23,27 @@ public class DaoFactory {
         return connectionSource;
     }
 
-    public DaoInstance getDaoInstance(String entity) {
-        switch (entity) {
-            case "User":
-                try {
-                    return new UserDao(connectionSource);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            case "Book":
-                try {
-                    return new BookDao(connectionSource);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            case "History":
-                try {
-                    return new HistoryDao(connectionSource);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            default:
-                throw new RuntimeException("Unknown entity");
+    public UserDao getUserDao() throws SQLException {
+        try {
+            return new UserDao(connectionSource);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public BookDao getBookDao() throws SQLException {
+        try {
+            return new BookDao(connectionSource);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public HistoryDao getHistoryDao() throws SQLException {
+        try {
+            return new HistoryDao(connectionSource);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

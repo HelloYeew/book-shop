@@ -3,6 +3,8 @@ import dao.BookDao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.List;
+
 /**
  * Class represent a book in "books" database table.
  */
@@ -55,6 +57,8 @@ public class Book implements Entity {
      */
     @DatabaseField(canBeNull = false)
     private double price;
+
+    public static String[] readableColumnName = {"ID", "Title", "Author", "Genre", "Subgenre", "Pages", "Publisher", "Price"};
 
     /**
      * Create a new book.
@@ -142,5 +146,20 @@ public class Book implements Entity {
 
     public String toString() {
         return "id=" + id + ", title=" + title + ", author=" + author + ", genre=" + genre + ", subgenre=" + subgenre + ", height=" + height + ", publisher=" + publisher + ", price=" + price;
+    }
+
+    public static Object[][] convertToArray(List<Book> books) {
+        Object[][] data = new Object[books.size()][];
+        for (int i = 0; i < books.size(); i++) {
+            Book book = books.get(i);
+            data[i] = new Object[]{book.getId(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getSubgenre(), book.getHeight(), book.getPublisher(), book.getPrice()};
+        }
+        return data;
+    }
+
+    public static Object[][] convertToArray(Book book) {
+        Object[][] data = new Object[1][];
+        data[0] = new Object[]{book.getId(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getSubgenre(), book.getHeight(), book.getPublisher(), book.getPrice()};
+        return data;
     }
 }

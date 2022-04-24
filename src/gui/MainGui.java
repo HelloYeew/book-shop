@@ -1,11 +1,15 @@
 package gui;
 
 import dao.DaoFactory;
+import entity.Book;
+import entity.History;
+import entity.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.SQLException;
+import java.util.List;
 
 public class MainGui extends JFrame {
     static String databaseUrl = "jdbc:sqlite:bookshop.db";
@@ -36,10 +40,10 @@ public class MainGui extends JFrame {
         showAllBooksButton.addActionListener(e -> changeToBookState());
         buttonTopPanel.add(showAllBooksButton);
         JButton showAllUserButton = new JButton("Users");
-        showAllUserButton.addActionListener(e -> showAllUser());
+        showAllUserButton.addActionListener(e -> changeToUserState());
         buttonTopPanel.add(showAllUserButton);
         JButton showAllHistoryButton = new JButton("History");
-        showAllHistoryButton.addActionListener(e -> showAllHistory());
+        showAllHistoryButton.addActionListener(e -> changeToHistoryState());
         buttonTopPanel.add(showAllHistoryButton);
         topPanel.add(buttonTopPanel);
         // Add search text field below
@@ -63,7 +67,7 @@ public class MainGui extends JFrame {
         add(bottomPanel, BorderLayout.SOUTH);
 
         try {
-            Object[][] data = daoFactory.getDaoInstance("Book").getAllAsArray();
+            Object[][] data = daoFactory.getBookDao().getAllAsArray();
             String[] columnNames = {"ID", "Title", "Author", "Genre", "Subgenre", "Pages", "Publisher", "Price"};
             countLabel.setText("Count : " + data.length);
             mainTable = new JTable(data, columnNames);
@@ -82,37 +86,30 @@ public class MainGui extends JFrame {
 
     private void changeToBookState() {
         try {
-            guiState = GuiState.BOOKS;
-            Object[][] data = daoFactory.getDaoInstance("Book").getAllAsArray();
-            String[] columnNames = {"ID", "Title", "Author", "Genre", "Subgenre", "Pages", "Publisher", "Price"};
-            redrawTable(data, columnNames);
-            redrawComboBox(columnNames);
+            redrawTable(daoFactory.getBookDao().getAllAsArray(), Book.readableColumnName);
+            redrawComboBox(Book.readableColumnName);
             searchTextField.setText("");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void showAllUser() {
+    private void changeToUserState() {
         try {
             guiState = GuiState.USERS;
-            Object[][] data = daoFactory.getDaoInstance("User").getAllAsArray();
-            String[] columnNames = {"ID", "Username"};
-            redrawTable(data, columnNames);
-            redrawComboBox(columnNames);
+            redrawTable(daoFactory.getUserDao().getAllAsArray(), User.readableColumnName);
+            redrawComboBox(User.readableColumnName);
             searchTextField.setText("");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void showAllHistory() {
+    private void changeToHistoryState() {
         try {
             guiState = GuiState.HISTORY;
-            Object[][] data = daoFactory.getDaoInstance("History").getAllAsArray();
-            String[] columnNames = {"ID", "Buyer Username", "Book Title"};
-            redrawTable(data, columnNames);
-            redrawComboBox(columnNames);
+            redrawTable(daoFactory.getHistoryDao().getAllAsArray(), History.columnName);
+            redrawComboBox(History.columnName);
             searchTextField.setText("");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -120,7 +117,6 @@ public class MainGui extends JFrame {
     }
 
     private void redrawTable(Object[][] data, String[] columnNames) {
-        // update table
         mainTable.setModel(new DefaultTableModel(data, columnNames));
         mainScrollPane.setViewportView(mainTable);
         countLabel.setText("Count : " + data.length);

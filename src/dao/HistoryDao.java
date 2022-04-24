@@ -16,23 +16,13 @@ public class HistoryDao extends BaseDaoImpl<History, Integer> implements DaoInst
         return this.queryForAll();
     }
 
-    public Object[][] convertToArray(List<History> histories) {
-        Object[][] data = new Object[histories.size()][];
-        for (int i = 0; i < histories.size(); i++) {
-            History history = histories.get(i);
-            data[i] = new Object[]{history.getId(), history.getBuyer().getUsername(), history.getBook().getTitle()};
-        }
-        return data;
-    }
-
     /**
      * Return 2D array that can be render to table in GUI.
      *
      * @return 2D array that can be render to table in GUI.
      * @throws SQLException if SQL query failed.
      */
-    @Override
     public Object[][] getAllAsArray() throws SQLException {
-        return convertToArray(getAll());
+        return History.convertToArray(getAll());
     }
 }

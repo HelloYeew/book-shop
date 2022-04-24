@@ -39,8 +39,7 @@ public class BookDao extends BaseDaoImpl<Book, Integer> implements DaoInstance {
      * @return 2D array that can be render to table in GUI.
      * @throws SQLException if SQL query failed.
      */
-    @Override
     public Object[][] getAllAsArray() throws SQLException {
-        return convertToArray(getAll());
+        return Book.convertToArray(getAll());
     }
 }
