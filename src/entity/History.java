@@ -1,8 +1,12 @@
 package entity;
+import com.j256.ormlite.support.ConnectionSource;
+import dao.BookDao;
 import dao.HistoryDao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import dao.UserDao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**

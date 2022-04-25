@@ -12,10 +12,6 @@ public class UserDao extends BaseDaoImpl<User, Integer> implements DaoInstance {
         super(connectionSource, User.class);
     }
 
-    public List<User> getAll() throws SQLException {
-        return this.queryForAll();
-    }
-
     /**
      * Return 2D array that can be render to table in GUI.
      *
@@ -23,6 +19,6 @@ public class UserDao extends BaseDaoImpl<User, Integer> implements DaoInstance {
      * @throws SQLException if SQL query failed.
      */
     public Object[][] getAllAsArray() throws SQLException {
-        return User.convertToArray(getAll());
+        return User.convertToArray(queryForAll());
     }
 }

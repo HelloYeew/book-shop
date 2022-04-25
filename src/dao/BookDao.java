@@ -12,18 +12,6 @@ public class BookDao extends BaseDaoImpl<Book, Integer> implements DaoInstance {
         super(connectionSource, Book.class);
     }
 
-    public void addBook(Book book) throws SQLException {
-        create(book);
-    }
-
-    public List<Book> getAll() throws SQLException {
-        return this.queryForAll();
-    }
-
-    public Book getById(int id) throws SQLException {
-        return this.queryForId(id);
-    }
-
     public Object[][] convertToArray(List<Book> books) {
         Object[][] data = new Object[books.size()][];
         for (int i = 0; i < books.size(); i++) {
@@ -40,6 +28,6 @@ public class BookDao extends BaseDaoImpl<Book, Integer> implements DaoInstance {
      * @throws SQLException if SQL query failed.
      */
     public Object[][] getAllAsArray() throws SQLException {
-        return Book.convertToArray(getAll());
+        return Book.convertToArray(queryForAll());
     }
 }

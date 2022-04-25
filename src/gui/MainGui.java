@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MainGui extends JFrame {
     static String databaseUrl = "jdbc:sqlite:bookshop.db";
-    private static DaoFactory daoFactory;
+    public static DaoFactory daoFactory;
 
     private JTable mainTable;
 
@@ -22,7 +22,7 @@ public class MainGui extends JFrame {
 
     private JLabel countLabel = new JLabel("Count : ");
 
-    private GuiState guiState = GuiState.BOOKS;
+    public static GuiState guiState = GuiState.BOOKS;
 
     private JComboBox<String> searchComboBox;
 
@@ -70,11 +70,20 @@ public class MainGui extends JFrame {
         add(topPanel, BorderLayout.NORTH);
 
         JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new FlowLayout());
-        bottomPanel.add(countLabel);
+        bottomPanel.setLayout(new GridLayout(2, 1));
+        JPanel bottomTextPanel = new JPanel();
+        bottomTextPanel.setLayout(new FlowLayout());
+        bottomTextPanel.add(countLabel);
+        JPanel bottomButtonPanel = new JPanel();
+        bottomButtonPanel.setLayout(new FlowLayout());
         JButton refreshButton = new JButton("Refresh");
         refreshButton.addActionListener(e -> refresh());
-        bottomPanel.add(refreshButton);
+        bottomButtonPanel.add(refreshButton);
+        JButton addButton = new JButton("Add");
+        addButton.addActionListener(e -> new AddWindow());
+        bottomButtonPanel.add(addButton);
+        bottomPanel.add(bottomTextPanel);
+        bottomPanel.add(bottomButtonPanel);
         add(bottomPanel, BorderLayout.SOUTH);
 
         // Initialize table with book table
@@ -158,7 +167,7 @@ public class MainGui extends JFrame {
         }
     }
 
-    private void refresh() {
+    public void refresh() {
         if (guiState == GuiState.BOOKS) {
             changeToBookState();
         } else if (guiState == GuiState.USERS) {
