@@ -61,9 +61,13 @@ public class AddWindow extends JFrame {
             mainTextFieldPanel.add(usernameTextField);
             addButton.addActionListener(e -> {
                 try {
-                    MainGui.daoFactory.getUserDao().create(new User(usernameTextField.getText()));
-                    JOptionPane.showMessageDialog(this, "User added successfully\nPlease click on the 'Refresh' button to see the changes");
-                    dispose();
+                    if (!usernameTextField.getText().equals("")) {
+                        MainGui.daoFactory.getUserDao().create(new User(usernameTextField.getText()));
+                        JOptionPane.showMessageDialog(this, "User added successfully\nPlease click on the 'Refresh' button to see the changes");
+                        dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Username cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(this, "Error on adding user to database\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }

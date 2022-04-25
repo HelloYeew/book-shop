@@ -56,7 +56,7 @@ public class User implements Entity {
     }
 
     public String toString() {
-        return this.id + username;
+        return this.id + "." + username;
     }
 
     public static Object[][] convertToArray(List<User> users) {

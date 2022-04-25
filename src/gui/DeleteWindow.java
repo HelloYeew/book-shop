@@ -96,7 +96,7 @@ public class DeleteWindow extends JFrame {
                                 publisherTextField.setText("");
                                 priceTextField.setText("");
                             }
-                        } catch (SQLException ex) {
+                        } catch (NumberFormatException | SQLException ex) {
                             titleTextField.setText("");
                             authorTextField.setText("");
                             genreTextField.setText("");
@@ -137,7 +137,7 @@ public class DeleteWindow extends JFrame {
                                 publisherTextField.setText("");
                                 priceTextField.setText("");
                             }
-                        } catch (SQLException ex) {
+                        } catch (NumberFormatException | SQLException ex) {
                             titleTextField.setText("");
                             authorTextField.setText("");
                             genreTextField.setText("");
@@ -176,7 +176,7 @@ public class DeleteWindow extends JFrame {
                                 publisherTextField.setText("");
                                 priceTextField.setText("");
                             }
-                        } catch (SQLException ex) {
+                        } catch (NumberFormatException | SQLException ex) {
                             titleTextField.setText("");
                             authorTextField.setText("");
                             genreTextField.setText("");
@@ -198,7 +198,7 @@ public class DeleteWindow extends JFrame {
             mainTextFieldPanel.add(usernameTextField);
             deleteButton.addActionListener(e -> {
                 try {
-                    MainGui.daoFactory.getUserDao().update(new User(Integer.parseInt(userIdTextField.getText()),usernameTextField.getText()));
+                    MainGui.daoFactory.getUserDao().delete(new User(Integer.parseInt(userIdTextField.getText()),usernameTextField.getText()));
                     JOptionPane.showMessageDialog(this, "User deleted successfully\nPlease click on the 'Refresh' button to see the changes");
                     dispose();
                 } catch (SQLException ex) {
@@ -281,7 +281,8 @@ public class DeleteWindow extends JFrame {
             mainTextFieldPanel.add(bookIdTextField);
             deleteButton.addActionListener(e -> {
                 try {
-                    MainGui.daoFactory.getHistoryDao().update(new History(MainGui.daoFactory.getUserDao().queryForId(Integer.parseInt(userIdTextField.getText())), MainGui.daoFactory.getBookDao().queryForId(Integer.parseInt(bookIdTextField.getText()))));
+                    // TODO: This is still not delete
+                    MainGui.daoFactory.getHistoryDao().delete(new History(MainGui.daoFactory.getUserDao().queryForId(Integer.parseInt(userIdTextField.getText())), MainGui.daoFactory.getBookDao().queryForId(Integer.parseInt(bookIdTextField.getText()))));
                     JOptionPane.showMessageDialog(this, "History deleted successfully\nPlease click on the 'Refresh' button to see the changes");
                     dispose();
                 } catch (NumberFormatException | SQLException ex) {
@@ -307,7 +308,7 @@ public class DeleteWindow extends JFrame {
                             userIdTextField.setText("");
                             bookIdTextField.setText("");
                         }
-                    } catch (SQLException ex) {
+                    } catch (NumberFormatException | SQLException ex) {
                         userIdTextField.setText("");
                         bookIdTextField.setText("");
                     }
@@ -322,7 +323,19 @@ public class DeleteWindow extends JFrame {
                  */
                 @Override
                 public void removeUpdate(DocumentEvent e) {
-
+                    try {
+                        History newHistory = MainGui.daoFactory.getHistoryDao().queryForId(Integer.parseInt(historyIdTextField.getText()));
+                        if (newHistory != null) {
+                            userIdTextField.setText(String.valueOf(newHistory.getBuyer().getId()));
+                            bookIdTextField.setText(String.valueOf(newHistory.getBook().getId()));
+                        } else {
+                            userIdTextField.setText("");
+                            bookIdTextField.setText("");
+                        }
+                    } catch (NumberFormatException | SQLException ex) {
+                        userIdTextField.setText("");
+                        bookIdTextField.setText("");
+                    }
                 }
 
                 /**
@@ -332,7 +345,19 @@ public class DeleteWindow extends JFrame {
                  */
                 @Override
                 public void changedUpdate(DocumentEvent e) {
-
+                    try {
+                        History newHistory = MainGui.daoFactory.getHistoryDao().queryForId(Integer.parseInt(historyIdTextField.getText()));
+                        if (newHistory != null) {
+                            userIdTextField.setText(String.valueOf(newHistory.getBuyer().getId()));
+                            bookIdTextField.setText(String.valueOf(newHistory.getBook().getId()));
+                        } else {
+                            userIdTextField.setText("");
+                            bookIdTextField.setText("");
+                        }
+                    } catch (NumberFormatException | SQLException ex) {
+                        userIdTextField.setText("");
+                        bookIdTextField.setText("");
+                    }
                 }
             });
         }

@@ -92,7 +92,7 @@ public class Book implements Entity {
         this.publisher = publisher;
         this.price = price;
     }
-    
+
     public Book() {
 
     }
@@ -158,7 +158,7 @@ public class Book implements Entity {
     }
 
     public String toString() {
-        return "id=" + id + ", title=" + title + ", author=" + author + ", genre=" + genre + ", subgenre=" + subgenre + ", height=" + height + ", publisher=" + publisher + ", price=" + price;
+        return "(ID: " + id + ") " + title + " by " + author + " (" + genre + ")";
     }
 
     public static Object[][] convertToArray(List<Book> books) {

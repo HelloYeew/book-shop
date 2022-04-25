@@ -89,7 +89,7 @@ public class UpdateWindow extends JFrame {
                                 publisherTextField.setText("");
                                 priceTextField.setText("");
                             }
-                        } catch (SQLException ex) {
+                        } catch (NumberFormatException | SQLException ex) {
                             titleTextField.setText("");
                             authorTextField.setText("");
                             genreTextField.setText("");
@@ -130,7 +130,7 @@ public class UpdateWindow extends JFrame {
                                 publisherTextField.setText("");
                                 priceTextField.setText("");
                             }
-                        } catch (SQLException ex) {
+                        } catch (NumberFormatException | SQLException ex) {
                             titleTextField.setText("");
                             authorTextField.setText("");
                             genreTextField.setText("");
@@ -169,7 +169,7 @@ public class UpdateWindow extends JFrame {
                                 publisherTextField.setText("");
                                 priceTextField.setText("");
                             }
-                        } catch (SQLException ex) {
+                        } catch (NumberFormatException | SQLException ex) {
                             titleTextField.setText("");
                             authorTextField.setText("");
                             genreTextField.setText("");
@@ -190,9 +190,13 @@ public class UpdateWindow extends JFrame {
             mainTextFieldPanel.add(usernameTextField);
             updateButton.addActionListener(e -> {
                 try {
-                    MainGui.daoFactory.getUserDao().update(new User(Integer.parseInt(userIdTextField.getText()),usernameTextField.getText()));
-                    JOptionPane.showMessageDialog(this, "User updated successfully\nPlease click on the 'Refresh' button to see the changes");
-                    dispose();
+                    if (!usernameTextField.getText().equals("")) {
+                        MainGui.daoFactory.getUserDao().update(new User(Integer.parseInt(userIdTextField.getText()),usernameTextField.getText()));
+                        JOptionPane.showMessageDialog(this, "User updated successfully\nPlease click on the 'Refresh' button to see the changes");
+                        dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Username cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(this, "Error on updating user to database\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -271,6 +275,7 @@ public class UpdateWindow extends JFrame {
             mainTextFieldPanel.add(bookIdTextField);
             updateButton.addActionListener(e -> {
                 try {
+                    // TODO: This is still not update
                     MainGui.daoFactory.getHistoryDao().update(new History(MainGui.daoFactory.getUserDao().queryForId(Integer.parseInt(userIdTextField.getText())), MainGui.daoFactory.getBookDao().queryForId(Integer.parseInt(bookIdTextField.getText()))));
                     JOptionPane.showMessageDialog(this, "History updated successfully\nPlease click on the 'Refresh' button to see the changes");
                     dispose();
@@ -297,7 +302,7 @@ public class UpdateWindow extends JFrame {
                             userIdTextField.setText("");
                             bookIdTextField.setText("");
                         }
-                    } catch (SQLException ex) {
+                    } catch (NumberFormatException | SQLException ex) {
                         userIdTextField.setText("");
                         bookIdTextField.setText("");
                     }
@@ -312,7 +317,19 @@ public class UpdateWindow extends JFrame {
                  */
                 @Override
                 public void removeUpdate(DocumentEvent e) {
-
+                    try {
+                        History newHistory = MainGui.daoFactory.getHistoryDao().queryForId(Integer.parseInt(historyIdTextField.getText()));
+                        if (newHistory != null) {
+                            userIdTextField.setText(String.valueOf(newHistory.getBuyer().getId()));
+                            bookIdTextField.setText(String.valueOf(newHistory.getBook().getId()));
+                        } else {
+                            userIdTextField.setText("");
+                            bookIdTextField.setText("");
+                        }
+                    } catch (NumberFormatException | SQLException ex) {
+                        userIdTextField.setText("");
+                        bookIdTextField.setText("");
+                    }
                 }
 
                 /**
@@ -322,7 +339,19 @@ public class UpdateWindow extends JFrame {
                  */
                 @Override
                 public void changedUpdate(DocumentEvent e) {
-
+                    try {
+                        History newHistory = MainGui.daoFactory.getHistoryDao().queryForId(Integer.parseInt(historyIdTextField.getText()));
+                        if (newHistory != null) {
+                            userIdTextField.setText(String.valueOf(newHistory.getBuyer().getId()));
+                            bookIdTextField.setText(String.valueOf(newHistory.getBook().getId()));
+                        } else {
+                            userIdTextField.setText("");
+                            bookIdTextField.setText("");
+                        }
+                    } catch (NumberFormatException | SQLException ex) {
+                        userIdTextField.setText("");
+                        bookIdTextField.setText("");
+                    }
                 }
             });
         }
