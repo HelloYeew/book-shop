@@ -9,8 +9,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -72,7 +70,6 @@ public class MainGui extends JFrame {
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout());
-        JLabel countLabel = new JLabel("Count : ");
         bottomPanel.add(countLabel);
         add(bottomPanel, BorderLayout.SOUTH);
 
