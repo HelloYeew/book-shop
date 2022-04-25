@@ -97,6 +97,7 @@ public class MainGui extends JFrame {
 
     private void changeToBookState() {
         try {
+            guiState = GuiState.BOOKS;
             redrawTable(daoFactory.getBookDao().getAllAsArray(), Book.readableColumnName);
             redrawComboBox(Book.readableColumnName);
             searchTextField.setText("");
@@ -128,11 +129,11 @@ public class MainGui extends JFrame {
     }
 
     private void search() {
-        // TODO: Fix improper state change
         System.out.println("Current state : " + guiState);
         // If the search text is empty, show all the data instead
         if (searchTextField.getText().isEmpty()) {
             if (guiState == GuiState.BOOKS) {
+                // TODO: Publisher can be blank
                 changeToBookState();
             } else if (guiState == GuiState.USERS) {
                 changeToUserState();
