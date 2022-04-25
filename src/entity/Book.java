@@ -25,19 +25,19 @@ public class Book implements Entity {
     /**
      * Book author.
      */
-    @DatabaseField(canBeNull = false)
+    @DatabaseField
     private String author;
 
     /**
      * Book genre.
      */
-    @DatabaseField(canBeNull = false)
+    @DatabaseField
     private String genre;
 
     /**
      * Book subgenre.
      */
-    @DatabaseField(canBeNull = false)
+    @DatabaseField
     private String subgenre;
 
     /**

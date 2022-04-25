@@ -10,9 +10,9 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS books (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
-    author TEXT NOT NULL,
-    genre TEXT NOT NULL,
-    subgenre TEXT NOT NULL,
+    author TEXT,
+    genre TEXT,
+    subgenre TEXT,
     height INTEGER NOT NULL,
     publisher TEXT,
     price REAL NOT NULL
