@@ -24,6 +24,8 @@ public class User implements Entity {
 
     public static String[] readableColumnName = {"ID", "Username"};
 
+    public static String[] queryColumnName = {"id", "username"};
+
     /**
      * Create a new user
      * @param username User's username represent the name of the user.

@@ -23,6 +23,7 @@ public class MainGui extends JFrame {
     private JLabel countLabel = new JLabel("Count : ");
 
     private GuiState guiState = GuiState.BOOKS;
+
     private JComboBox<String> searchComboBox;
 
     private JTextField searchTextField;
@@ -51,6 +52,7 @@ public class MainGui extends JFrame {
         JPanel searchPanel = new JPanel();
         searchPanel.setLayout(new FlowLayout());
         searchTextField = new JTextField(20);
+        // This listener make text field can enter to search
         searchTextField.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -58,8 +60,7 @@ public class MainGui extends JFrame {
             }
         });
         // Set up search button
-        String[] bookSearchFields = {"ID", "Title", "Author", "Genre", "Subgenre", "Pages", "Publisher", "Price"};
-        searchComboBox = new JComboBox<>(bookSearchFields);
+        searchComboBox = new JComboBox<>(Book.readableColumnName);
         searchPanel.add(searchComboBox);
         JButton searchButton = new JButton("Search");
         searchPanel.add(searchTextField);
@@ -71,18 +72,25 @@ public class MainGui extends JFrame {
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout());
         bottomPanel.add(countLabel);
+        JButton refreshButton = new JButton("Refresh");
+        refreshButton.addActionListener(e -> refresh());
+        bottomPanel.add(refreshButton);
         add(bottomPanel, BorderLayout.SOUTH);
 
+        // Initialize table with book table
         try {
+            System.out.println("Initializing database...");
             Object[][] data = daoFactory.getBookDao().getAllAsArray();
-            String[] columnNames = {"ID", "Title", "Author", "Genre", "Subgenre", "Pages", "Publisher", "Price"};
+            String[] columnNames = Book.readableColumnName;
             countLabel.setText("Count : " + data.length);
             mainTable = new JTable(data, columnNames);
             mainTable.setDefaultEditor(Object.class, null);
             mainScrollPane = new JScrollPane(mainTable);
-            add(mainScrollPane, BorderLayout.CENTER);
+            System.out.println("Database initialized.");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            JOptionPane.showMessageDialog(this, "Error on initialize database query\n" + e.getMessage() + "\nPlease check your database", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error on initialize database query : " + e.getMessage());
+            System.exit(1);
         }
 
         add(mainScrollPane, BorderLayout.CENTER);
@@ -126,40 +134,37 @@ public class MainGui extends JFrame {
     }
 
     private void search() {
-        System.out.println("Current state : " + guiState);
-        // If the search text is empty, show all the data instead
-        if (searchTextField.getText().isEmpty()) {
-            if (guiState == GuiState.BOOKS) {
-                // TODO: Publisher can be blank
-                changeToBookState();
-            } else if (guiState == GuiState.USERS) {
-                changeToUserState();
-            } else if (guiState == GuiState.HISTORY) {
-                changeToHistoryState();
+        if (guiState == GuiState.BOOKS) {
+            try {
+                List<Book> data = daoFactory.getBookDao().queryForEq(Book.queryColumnName[searchComboBox.getSelectedIndex()], searchTextField.getText());
+                redrawTable(Book.convertToArray(data), Book.readableColumnName);
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            if (guiState == GuiState.BOOKS) {
-                try {
-                    List<Book> data = daoFactory.getBookDao().queryForEq(Book.readableColumnName[searchComboBox.getSelectedIndex()], searchTextField.getText());
-                    redrawTable(Book.convertToArray(data), Book.readableColumnName);
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } else if (guiState == GuiState.USERS) {
-                try {
-                    List<User> data = daoFactory.getUserDao().queryForEq(User.readableColumnName[searchComboBox.getSelectedIndex()], searchTextField.getText());
-                    redrawTable(User.convertToArray(data), User.readableColumnName);
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } else if (guiState == GuiState.HISTORY) {
-                try {
-                    List<History> data = daoFactory.getHistoryDao().queryForEq(History.columnName[searchComboBox.getSelectedIndex()], searchTextField.getText());
-                    redrawTable(History.convertToArray(data), History.columnName);
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
+        } else if (guiState == GuiState.USERS) {
+            try {
+                List<User> data = daoFactory.getUserDao().queryForEq(User.queryColumnName[searchComboBox.getSelectedIndex()], searchTextField.getText());
+                redrawTable(User.convertToArray(data), User.readableColumnName);
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
+        } else if (guiState == GuiState.HISTORY) {
+            try {
+                List<History> data = daoFactory.getHistoryDao().queryForEq(History.queryColumnName[searchComboBox.getSelectedIndex()], searchTextField.getText());
+                redrawTable(History.convertToArray(data), History.columnName);
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void refresh() {
+        if (guiState == GuiState.BOOKS) {
+            changeToBookState();
+        } else if (guiState == GuiState.USERS) {
+            changeToUserState();
+        } else if (guiState == GuiState.HISTORY) {
+            changeToHistoryState();
         }
     }
 
@@ -181,8 +186,8 @@ public class MainGui extends JFrame {
         System.out.println("Connecting to database...");
         try {
             daoFactory = new DaoFactory(databaseUrl);
-            System.out.println("Connected to database");
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error on database connection\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Error on database connection\n" + e.getMessage());
             System.exit(1);
         }
