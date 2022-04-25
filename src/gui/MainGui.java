@@ -82,6 +82,13 @@ public class MainGui extends JFrame {
         JButton addButton = new JButton("Add");
         addButton.addActionListener(e -> new AddWindow());
         bottomButtonPanel.add(addButton);
+        JButton updateButton = new JButton("Update");
+        updateButton.addActionListener(e -> new UpdateWindow());
+        JButton deleteButton = new JButton("Delete");
+        deleteButton.addActionListener(e -> new DeleteWindow());
+        bottomButtonPanel.add(addButton);
+        bottomButtonPanel.add(updateButton);
+        bottomButtonPanel.add(deleteButton);
         bottomPanel.add(bottomTextPanel);
         bottomPanel.add(bottomButtonPanel);
         add(bottomPanel, BorderLayout.SOUTH);
@@ -134,8 +141,8 @@ public class MainGui extends JFrame {
     private void changeToHistoryState() {
         try {
             guiState = GuiState.HISTORY;
-            redrawTable(daoFactory.getHistoryDao().getAllAsArray(), History.columnName);
-            redrawComboBox(History.columnName);
+            redrawTable(daoFactory.getHistoryDao().getAllAsArray(), History.readableColumnName);
+            redrawComboBox(History.readableColumnName);
             searchTextField.setText("");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -160,7 +167,7 @@ public class MainGui extends JFrame {
         } else if (guiState == GuiState.HISTORY) {
             try {
                 List<History> data = daoFactory.getHistoryDao().queryForEq(History.queryColumnName[searchComboBox.getSelectedIndex()], searchTextField.getText());
-                redrawTable(History.convertToArray(data), History.columnName);
+                redrawTable(History.convertToArray(data), History.readableColumnName);
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }

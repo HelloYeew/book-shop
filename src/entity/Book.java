@@ -82,6 +82,17 @@ public class Book implements Entity {
         this.price = price;
     }
 
+    public Book(int ID, String title, String author, String genre, String subgenre, int height, String publisher, double price) {
+        this.id = ID;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.subgenre = subgenre;
+        this.height = height;
+        this.publisher = publisher;
+        this.price = price;
+    }
+    
     public Book() {
 
     }

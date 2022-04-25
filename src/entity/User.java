@@ -34,6 +34,11 @@ public class User implements Entity {
         this.username = username;
     }
 
+    public User(int ID, String username) {
+        this.id = ID;
+        this.username = username;
+    }
+
     public User() {
 
     }

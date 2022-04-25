@@ -1,12 +1,8 @@
 package entity;
-import com.j256.ormlite.support.ConnectionSource;
-import dao.BookDao;
 import dao.HistoryDao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import dao.UserDao;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -32,7 +28,7 @@ public class History implements Entity {
     @DatabaseField(foreign = true, columnName = "book_id")
     private Book book;
 
-    public static String[] columnName = {"ID", "Buyer Username", "Book Title"};
+    public static String[] readableColumnName = {"ID", "Buyer Username", "Book Title"};
 
     public static String[] queryColumnName = {"id", "buyer_id", "book_id"};
 
@@ -42,6 +38,12 @@ public class History implements Entity {
      * @param book ID of book that is foreign key to book table.
      */
     public History(User buyer, Book book) {
+        this.buyer = buyer;
+        this.book = book;
+    }
+
+    public History(int ID, User buyer, Book book) {
+        this.id = ID;
         this.buyer = buyer;
         this.book = book;
     }
