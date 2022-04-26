@@ -90,7 +90,7 @@ public class AddWindow extends JFrame {
                     MainGui.daoFactory.getHistoryDao().create(new History(MainGui.daoFactory.getUserDao().queryForId(Integer.parseInt(userIdTextField.getText())), MainGui.daoFactory.getBookDao().queryForId(Integer.parseInt(bookIdTextField.getText()))));
                     JOptionPane.showMessageDialog(this, "History added successfully\nPlease click on the 'Refresh' button to see the changes");
                     dispose();
-                } catch (NumberFormatException | SQLException ex) {
+                } catch (NumberFormatException | SQLException | NullPointerException ex) {
                     JOptionPane.showMessageDialog(this, "Error on adding history to database\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             });
