@@ -180,7 +180,7 @@ public class MainGui extends JFrame {
         }
     }
 
-    public void refresh() {
+    private void refresh() {
         if (guiState == GuiState.BOOKS) {
             changeToBookState();
         } else if (guiState == GuiState.USERS) {
