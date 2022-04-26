@@ -2,6 +2,24 @@
 
 Simple database backed app mocking a book shop.
 
+## Application details
+
+This is the application that mocking a book shop where user can only one book a time and after buy the staff will add buy history to the database.
+
+## UML diagram
+
+Since the UML diagram is very big, you can download with the link below.
+
+Download : [PDF file](bookshop-umlclass.pdf) or [PNG file](bookshop-umlclass-picture.png) but I recommend PDF for better experience.
+
+![UML class diagram](bookshop-umlclass-picture.png)
+
+## Package diagram
+
+Download : [PNG file](bookshop-package.png)
+
+![Package diagram](bookshop-package.png)
+
 ## Create database schema and import data from CSV files
 
 Use SQLite and `sqlite3` to create a database schema using command line and given SQL schema file.
@@ -63,3 +81,15 @@ to open the table inside IntelliJ. To reload the page click `Reload page` button
 To reopen the database console, click the database console button, then click `Open default console` to open the database console and IntelliJ will recover the latest SQL query.
 
 ![Reopen the database console](readme-pics/reopen-console.png)
+
+## Run the GUI
+
+### Run with IntelliJ IDEA
+
+Normally after you clone the repository and open this project in IntelliJ IDEA, everything is getting ready except the JDK version. You can set it via the notification after you open the `src/gui/MainGUI.java` file 
+or you can set it manually by go to `File > Project Structure > Project` or `Ctrl + Alt + Shift + S` and select the JDK version.
+
+![Set your JDK version](readme-pics/intellij-project-setup.png)
+
+After select JDK version, get in `src/gui/MainGUI.java` and go to the `public static void main(String[] args)` method and click play button to run the GUI.
+
