@@ -1,7 +1,10 @@
-package gui;
+package gui.popup;
 
 import entity.Book;
 import entity.User;
+import gui.GuiState;
+import gui.GuiStateUtils;
+import gui.MainGui;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

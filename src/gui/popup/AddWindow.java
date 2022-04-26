@@ -1,8 +1,11 @@
-package gui;
+package gui.popup;
 
 import entity.Book;
 import entity.History;
 import entity.User;
+import gui.GuiState;
+import gui.GuiStateUtils;
+import gui.MainGui;
 
 import javax.swing.*;
 import java.awt.*;

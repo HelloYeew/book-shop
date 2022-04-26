@@ -1,7 +1,6 @@
 package dao;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import entity.Book;
 
 import java.sql.SQLException;
 

@@ -7,6 +7,9 @@ import entity.User;
 import entity.utils.BookUtils;
 import entity.utils.HistoryUtils;
 import entity.utils.UserUtils;
+import gui.popup.AddWindow;
+import gui.popup.DeleteWindow;
+import gui.popup.UpdateWindow;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
