@@ -1,10 +1,12 @@
 # Book shop
 
-Simple database backed app mocking a book shop.
+Simple database backed app mocking a book shop with complete DAO.
 
 ## Application details
 
 This is the application that mocking a book shop where user can only one book a time and after buy the staff will add buy history to the database.
+
+This application use [ORMLite](https://ormlite.com/) as the main ORM library and has DAO classes for each entity.
 
 ## UML diagram
 
