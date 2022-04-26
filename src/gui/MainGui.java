@@ -28,6 +28,10 @@ public class MainGui extends JFrame {
 
     private JTextField searchTextField;
 
+    private JButton addButton;
+    private JButton updateButton;
+    private JButton deleteButton;
+
     public MainGui() {
         super("Book shop");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,12 +83,12 @@ public class MainGui extends JFrame {
         JButton refreshButton = new JButton("Refresh");
         refreshButton.addActionListener(e -> refresh());
         bottomButtonPanel.add(refreshButton);
-        JButton addButton = new JButton("Add");
+        addButton = new JButton("Add");
         addButton.addActionListener(e -> new AddWindow());
         bottomButtonPanel.add(addButton);
-        JButton updateButton = new JButton("Update");
+        updateButton = new JButton("Update");
         updateButton.addActionListener(e -> new UpdateWindow());
-        JButton deleteButton = new JButton("Delete");
+        deleteButton = new JButton("Delete");
         deleteButton.addActionListener(e -> new DeleteWindow());
         bottomButtonPanel.add(addButton);
         bottomButtonPanel.add(updateButton);
@@ -122,6 +126,8 @@ public class MainGui extends JFrame {
             redrawTable(daoFactory.getBookDao().getAllAsArray(), Book.readableColumnName);
             redrawComboBox(Book.readableColumnName);
             searchTextField.setText("");
+            updateButton.setEnabled(true);
+            deleteButton.setEnabled(true);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -133,6 +139,8 @@ public class MainGui extends JFrame {
             redrawTable(daoFactory.getUserDao().getAllAsArray(), User.readableColumnName);
             redrawComboBox(User.readableColumnName);
             searchTextField.setText("");
+            updateButton.setEnabled(true);
+            deleteButton.setEnabled(true);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -144,6 +152,8 @@ public class MainGui extends JFrame {
             redrawTable(daoFactory.getHistoryDao().getAllAsArray(), History.readableColumnName);
             redrawComboBox(History.readableColumnName);
             searchTextField.setText("");
+            updateButton.setEnabled(false);
+            deleteButton.setEnabled(false);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

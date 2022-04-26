@@ -16,8 +16,6 @@ public class UpdateWindow extends JFrame {
             setTitle("Update Book");
         } else if (MainGui.guiState == GuiState.USERS) {
             setTitle("Update User");
-        } else if (MainGui.guiState == GuiState.HISTORY) {
-            setTitle("Update History");
         }
 
         setLayout(new FlowLayout());
@@ -260,97 +258,6 @@ public class UpdateWindow extends JFrame {
                         }
                     } catch (SQLException ex) {
                         usernameTextField.setText("");
-                    }
-                }
-            });
-        } else if (MainGui.guiState == GuiState.HISTORY) {
-            mainTextFieldPanel.add(new JLabel("History ID"));
-            JTextField historyIdTextField = new JTextField(20);
-            mainTextFieldPanel.add(historyIdTextField);
-            mainTextFieldPanel.add(new JLabel("User ID"));
-            JTextField userIdTextField = new JTextField(20);
-            mainTextFieldPanel.add(userIdTextField);
-            mainTextFieldPanel.add(new JLabel("Book ID"));
-            JTextField bookIdTextField = new JTextField(20);
-            mainTextFieldPanel.add(bookIdTextField);
-            updateButton.addActionListener(e -> {
-                try {
-                    // TODO: This is still not update
-                    MainGui.daoFactory.getHistoryDao().update(new History(MainGui.daoFactory.getUserDao().queryForId(Integer.parseInt(userIdTextField.getText())), MainGui.daoFactory.getBookDao().queryForId(Integer.parseInt(bookIdTextField.getText()))));
-                    JOptionPane.showMessageDialog(this, "History updated successfully\nPlease click on the 'Refresh' button to see the changes");
-                    dispose();
-                } catch (NumberFormatException | SQLException ex) {
-                    JOptionPane.showMessageDialog(this, "Error on updating history to database\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            });
-            historyIdTextField.getDocument().addDocumentListener(new DocumentListener() {
-
-                /**
-                 * Gives notification that there was an insert into the document.  The
-                 * range given by the DocumentEvent bounds the freshly inserted region.
-                 *
-                 * @param e the document event
-                 */
-                @Override
-                public void insertUpdate(DocumentEvent e) {
-                    try {
-                        History newHistory = MainGui.daoFactory.getHistoryDao().queryForId(Integer.parseInt(historyIdTextField.getText()));
-                        if (newHistory != null) {
-                            userIdTextField.setText(String.valueOf(newHistory.getBuyer().getId()));
-                            bookIdTextField.setText(String.valueOf(newHistory.getBook().getId()));
-                        } else {
-                            userIdTextField.setText("");
-                            bookIdTextField.setText("");
-                        }
-                    } catch (NumberFormatException | SQLException ex) {
-                        userIdTextField.setText("");
-                        bookIdTextField.setText("");
-                    }
-                }
-
-                /**
-                 * Gives notification that a portion of the document has been
-                 * removed.  The range is given in terms of what the view last
-                 * saw (that is, before updating sticky positions).
-                 *
-                 * @param e the document event
-                 */
-                @Override
-                public void removeUpdate(DocumentEvent e) {
-                    try {
-                        History newHistory = MainGui.daoFactory.getHistoryDao().queryForId(Integer.parseInt(historyIdTextField.getText()));
-                        if (newHistory != null) {
-                            userIdTextField.setText(String.valueOf(newHistory.getBuyer().getId()));
-                            bookIdTextField.setText(String.valueOf(newHistory.getBook().getId()));
-                        } else {
-                            userIdTextField.setText("");
-                            bookIdTextField.setText("");
-                        }
-                    } catch (NumberFormatException | SQLException ex) {
-                        userIdTextField.setText("");
-                        bookIdTextField.setText("");
-                    }
-                }
-
-                /**
-                 * Gives notification that an attribute or set of attributes changed.
-                 *
-                 * @param e the document event
-                 */
-                @Override
-                public void changedUpdate(DocumentEvent e) {
-                    try {
-                        History newHistory = MainGui.daoFactory.getHistoryDao().queryForId(Integer.parseInt(historyIdTextField.getText()));
-                        if (newHistory != null) {
-                            userIdTextField.setText(String.valueOf(newHistory.getBuyer().getId()));
-                            bookIdTextField.setText(String.valueOf(newHistory.getBook().getId()));
-                        } else {
-                            userIdTextField.setText("");
-                            bookIdTextField.setText("");
-                        }
-                    } catch (NumberFormatException | SQLException ex) {
-                        userIdTextField.setText("");
-                        bookIdTextField.setText("");
                     }
                 }
             });
