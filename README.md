@@ -93,3 +93,7 @@ or you can set it manually by go to `File > Project Structure > Project` or `Ctr
 
 After select JDK version, get in `src/gui/MainGUI.java` and go to the `public static void main(String[] args)` method and click play button to run the GUI.
 
+If IntelliJ cannot detect library or JAR file, you can add it by go to project structure window again then go to `Modules > Dependencies`, click plus sign, select `JARs or Directories` and select 
+`lib` folder inside the project directory to add the JAR file to the project.
+
+![Add JAR to project](readme-pics/add-jar.png)
