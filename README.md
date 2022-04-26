@@ -22,7 +22,9 @@ Download : [PNG file](bookshop-package.png)
 
 ![Package diagram](bookshop-package.png)
 
-## Create database schema and import data from CSV files
+## Setup and run the application
+
+### Create database schema and import data from CSV files
 
 Use SQLite and `sqlite3` to create a database schema using command line and given SQL schema file.
 
@@ -40,7 +42,7 @@ sqlite> .import data/books.csv books # Import book data from CSV file
 
 **Note** : The `<` symbol cannot be used in a new Windows powershell so if you are using new Windows powershell as command line, please run this command in a normal Windows command prompt instead.
 
-## Check and explore the database
+### Check and explore the database
 
 You can use SQLite command tool to check and explore the database that you have created.
 
@@ -84,11 +86,11 @@ To reopen the database console, click the database console button, then click `O
 
 ![Reopen the database console](readme-pics/reopen-console.png)
 
-## Configuration
+### Configuration
 
 You can change your database connection URL by change `databaseUrl` in `MainGUI.java` file.
 
-## Run the GUI with IntelliJ IDEA
+### Run the GUI with IntelliJ IDEA
 
 Normally after you clone the repository and open this project in IntelliJ IDEA, everything is getting ready except the JDK version. You can set it via the notification after you open the `src/gui/MainGUI.java` file
 
