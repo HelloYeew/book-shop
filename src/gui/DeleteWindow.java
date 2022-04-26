@@ -1,7 +1,6 @@
 package gui;
 
 import entity.Book;
-import entity.History;
 import entity.User;
 
 import javax.swing.*;
@@ -10,12 +9,21 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.sql.SQLException;
 
+/**
+ * Window for delete an entity. It will be created by the main window.
+ *
+ * Note that delete operation is not allowed for History.
+ */
 public class DeleteWindow extends JFrame {
     public DeleteWindow() {
         if (MainGui.guiState == GuiState.BOOKS) {
             setTitle("Delete Book");
         } else if (MainGui.guiState == GuiState.USERS) {
             setTitle("Delete User");
+        } else if (MainGui.guiState == GuiState.HISTORY) {
+            // This is normally not reached but just in case when the main UI is not lock the delete button on the history tab.
+            JOptionPane.showMessageDialog(this, "Delete operation is not allowed for History.");
+            dispose();
         }
 
         setLayout(new FlowLayout());
@@ -65,6 +73,7 @@ public class DeleteWindow extends JFrame {
                     JOptionPane.showMessageDialog(this, "Error on deleting book from database\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             });
+            // Add a new listener that's bind with book ID to make it show up the info of the book in the text fields
             bookIdTextField.getDocument().addDocumentListener(new DocumentListener() {
                 /**
                  * Gives notification that there was an insert into the document.  The
@@ -203,8 +212,8 @@ public class DeleteWindow extends JFrame {
                     JOptionPane.showMessageDialog(this, "Error on deleting user from database\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             });
+            // Add a new listener to the user ID text field to make it update the username text field of the user.
             userIdTextField.getDocument().addDocumentListener(new DocumentListener() {
-
                 /**
                  * Gives notification that there was an insert into the document.  The
                  * range given by the DocumentEvent bounds the freshly inserted region.

@@ -8,7 +8,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 
+/**
+ * Window for adding a new entity. It will be created by the main window.
+ */
 public class AddWindow extends JFrame {
+    /**
+     * Constructor for the AddWindow.
+     */
     public AddWindow() {
         if (MainGui.guiState == GuiState.BOOKS) {
             setTitle("Add Book");

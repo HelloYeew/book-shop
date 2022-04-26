@@ -33,9 +33,9 @@ sqlite> .schema books # Get the schema of the books table
 CREATE TABLE books (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
-    author TEXT NOT NULL,
-    genre TEXT NOT NULL,
-    subgenre TEXT NOT NULL,
+    author TEXT,
+    genre TEXT,
+    subgenre TEXT,
     height INTEGER NOT NULL,
     publisher TEXT,
     price REAL NOT NULL
