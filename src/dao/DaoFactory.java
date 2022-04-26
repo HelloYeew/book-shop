@@ -5,11 +5,18 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import java.sql.SQLException;
 
 /**
- * Class that manage the DAO to make the program not to create a new DAO for each request.
+ * Class that act as a factory to create the different DAO
  */
 public class DaoFactory {
+    /**
+     * Connection source from the database
+     */
     public JdbcConnectionSource connectionSource;
 
+    /**
+     * Constructor of the factory that will create the connection to the database
+     * @param url the url of the database
+     */
     public DaoFactory(String url) throws SQLException {
         try {
             connectionSource = new JdbcConnectionSource(url);
@@ -18,10 +25,10 @@ public class DaoFactory {
         }
     }
 
-    public JdbcConnectionSource getConnectionSource() {
-        return connectionSource;
-    }
-
+    /**
+     * Generate the UserDao from the connection source
+     * @return the generated UserDao
+     */
     public UserDao getUserDao() throws SQLException {
         try {
             return new UserDao(connectionSource);
@@ -30,6 +37,10 @@ public class DaoFactory {
         }
     }
 
+    /**
+     * Generate the BookDao from the connection source
+     * @return the generated BookDao
+     */
     public BookDao getBookDao() throws SQLException {
         try {
             return new BookDao(connectionSource);
@@ -38,18 +49,14 @@ public class DaoFactory {
         }
     }
 
+    /**
+     * Generate the HistoryDao from the connection source
+     * @return the generated HistoryDao
+     */
     public HistoryDao getHistoryDao() throws SQLException {
         try {
             return new HistoryDao(connectionSource);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void close() throws SQLException {
-        try {
-            connectionSource.close();
-        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

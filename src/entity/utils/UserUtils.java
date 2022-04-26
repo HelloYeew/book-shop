@@ -1,4 +1,4 @@
-package entityutils;
+package entity.utils;
 
 import entity.User;
 
@@ -31,17 +31,6 @@ public class UserUtils {
             User user = users.get(i);
             data[i] = new Object[]{user.getId(), user.getUsername()};
         }
-        return data;
-    }
-
-    /**
-     * Convert one user object to an Object[][] that can be used in table UI in case of one book.
-     * @param user User object that may be obtained from database query.
-     * @return Object[][] that can be used in table UI.
-     */
-    public static Object[][] convertToArray(User user) {
-        Object[][] data = new Object[1][];
-        data[0] = new Object[]{user.getId(), user.getUsername()};
         return data;
     }
 }

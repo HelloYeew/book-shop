@@ -4,9 +4,9 @@ import dao.DaoFactory;
 import entity.Book;
 import entity.History;
 import entity.User;
-import entityutils.BookUtils;
-import entityutils.HistoryUtils;
-import entityutils.UserUtils;
+import entity.utils.BookUtils;
+import entity.utils.HistoryUtils;
+import entity.utils.UserUtils;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

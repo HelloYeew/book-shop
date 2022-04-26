@@ -1,4 +1,4 @@
-package entityutils;
+package entity.utils;
 
 import entity.Book;
 
@@ -31,17 +31,6 @@ public class BookUtils {
             Book book = books.get(i);
             data[i] = new Object[]{book.getId(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getSubgenre(), book.getHeight(), book.getPublisher(), book.getPrice()};
         }
-        return data;
-    }
-
-    /**
-     * Convert one book object to an Object[][] that can be used in table UI in case of one book.
-     * @param book Book object that may be gotten only one book from database query.
-     * @return Object[][] that can be used in table UI.
-     */
-    public static Object[][] convertToArray(Book book) {
-        Object[][] data = new Object[1][];
-        data[0] = new Object[]{book.getId(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getSubgenre(), book.getHeight(), book.getPublisher(), book.getPrice()};
         return data;
     }
 }

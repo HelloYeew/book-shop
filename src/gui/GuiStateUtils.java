@@ -1,8 +1,8 @@
 package gui;
 
-import entityutils.BookUtils;
-import entityutils.HistoryUtils;
-import entityutils.UserUtils;
+import entity.utils.BookUtils;
+import entity.utils.HistoryUtils;
+import entity.utils.UserUtils;
 
 /**
  * Static utility class for utility methods related to the {@link GuiState} enum that will use in UI.

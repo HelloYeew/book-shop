@@ -15,6 +15,9 @@ import java.sql.SQLException;
  * Note that delete operation is not allowed for History.
  */
 public class DeleteWindow extends JFrame {
+    /**
+     * Constructor for DeleteWindow.
+     */
     public DeleteWindow() {
         if (MainGui.guiState == GuiState.BOOKS) {
             setTitle("Delete Book");

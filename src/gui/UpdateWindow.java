@@ -1,7 +1,6 @@
 package gui;
 
 import entity.Book;
-import entity.History;
 import entity.User;
 
 import javax.swing.*;
@@ -10,7 +9,15 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.sql.SQLException;
 
+/**
+ * Window for update an entity. It will be created by the main window.
+ *
+ * Note that update operation is not allowed for History.
+ */
 public class UpdateWindow extends JFrame {
+    /**
+     * Constructor for UpdateWindow.
+     */
     public UpdateWindow() {
         if (MainGui.guiState == GuiState.BOOKS) {
             setTitle("Update Book");
@@ -58,6 +65,7 @@ public class UpdateWindow extends JFrame {
                     JOptionPane.showMessageDialog(this, "Error on updating book to database\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             });
+            // Add listener to book ID text field to make it automatically update the other text fields with the book data
             bookIdTextField.getDocument().addDocumentListener(new DocumentListener() {
                 /**
                  * Gives notification that there was an insert into the document.  The

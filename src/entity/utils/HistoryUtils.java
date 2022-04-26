@@ -1,4 +1,4 @@
-package entityutils;
+package entity.utils;
 
 import entity.History;
 
@@ -31,17 +31,6 @@ public class HistoryUtils {
             History history = histories.get(i);
             data[i] = new Object[]{history.getId(), history.getBuyer().getId(), history.getBook().getId()};
         }
-        return data;
-    }
-
-    /**
-     * Convert one book object to an Object[][] that can be used in table UI in case of one history.
-     * @param history History object that may be gotten only one history from database query.
-     * @return Object[][] that can be used in table UI.
-     */
-    public static Object[][] convertToArray(History history) {
-        Object[][] data = new Object[1][];
-        data[0] = new Object[]{history.getId(), history.getBuyer().getId(), history.getBook().getId()};
         return data;
     }
 }
