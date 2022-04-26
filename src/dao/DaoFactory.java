@@ -1,6 +1,7 @@
 package dao;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import entity.Book;
 
 import java.sql.SQLException;
 
@@ -14,6 +15,21 @@ public class DaoFactory {
     public JdbcConnectionSource connectionSource;
 
     /**
+     * DAO for the user entity.
+     */
+    private UserDao userDao;
+
+    /**
+     * DAO for the book entity.
+     */
+    private BookDao bookDao;
+
+    /**
+     * DAO for the history entity.
+     */
+    private HistoryDao historyDao;
+
+    /**
      * Constructor of the factory that will create the connection to the database
      * @param url the url of the database
      */
@@ -23,41 +39,47 @@ public class DaoFactory {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        try {
+            userDao = new UserDao(connectionSource);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            bookDao = new BookDao(connectionSource);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            historyDao = new HistoryDao(connectionSource);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
      * Generate the UserDao from the connection source
      * @return the generated UserDao
      */
-    public UserDao getUserDao() throws SQLException {
-        try {
-            return new UserDao(connectionSource);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public UserDao getUserDao() {
+        return userDao;
     }
 
     /**
      * Generate the BookDao from the connection source
      * @return the generated BookDao
      */
-    public BookDao getBookDao() throws SQLException {
-        try {
-            return new BookDao(connectionSource);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public BookDao getBookDao() {
+        return bookDao;
     }
 
     /**
      * Generate the HistoryDao from the connection source
      * @return the generated HistoryDao
      */
-    public HistoryDao getHistoryDao() throws SQLException {
-        try {
-            return new HistoryDao(connectionSource);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public HistoryDao getHistoryDao() {
+        return historyDao;
     }
 }
