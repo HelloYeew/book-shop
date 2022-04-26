@@ -4,6 +4,9 @@ import dao.DaoFactory;
 import entity.Book;
 import entity.History;
 import entity.User;
+import entityutils.BookUtils;
+import entityutils.HistoryUtils;
+import entityutils.UserUtils;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,19 +18,12 @@ import java.util.List;
 public class MainGui extends JFrame {
     static String databaseUrl = "jdbc:sqlite:bookshop.db";
     public static DaoFactory daoFactory;
-
     private JTable mainTable;
-
     private JScrollPane mainScrollPane;
-
     private JLabel countLabel = new JLabel("Count : ");
-
     public static GuiState guiState = GuiState.BOOKS;
-
     private JComboBox<String> searchComboBox;
-
     private JTextField searchTextField;
-
     private JButton addButton;
     private JButton updateButton;
     private JButton deleteButton;
@@ -64,7 +60,7 @@ public class MainGui extends JFrame {
             }
         });
         // Set up search button
-        searchComboBox = new JComboBox<>(Book.readableColumnName);
+        searchComboBox = new JComboBox<>(BookUtils.readableColumnName);
         searchPanel.add(searchComboBox);
         JButton searchButton = new JButton("Search");
         searchPanel.add(searchTextField);
@@ -101,7 +97,7 @@ public class MainGui extends JFrame {
         try {
             System.out.println("Initializing database...");
             Object[][] data = daoFactory.getBookDao().getAllAsArray();
-            String[] columnNames = Book.readableColumnName;
+            String[] columnNames = BookUtils.readableColumnName;
             countLabel.setText("Count : " + data.length);
             mainTable = new JTable(data, columnNames);
             mainTable.setDefaultEditor(Object.class, null);
@@ -123,8 +119,8 @@ public class MainGui extends JFrame {
     private void changeToBookState() {
         try {
             guiState = GuiState.BOOKS;
-            redrawTable(daoFactory.getBookDao().getAllAsArray(), Book.readableColumnName);
-            redrawComboBox(Book.readableColumnName);
+            redrawTable(daoFactory.getBookDao().getAllAsArray(), BookUtils.readableColumnName);
+            redrawComboBox(BookUtils.readableColumnName);
             searchTextField.setText("");
             updateButton.setEnabled(true);
             deleteButton.setEnabled(true);
@@ -136,8 +132,8 @@ public class MainGui extends JFrame {
     private void changeToUserState() {
         try {
             guiState = GuiState.USERS;
-            redrawTable(daoFactory.getUserDao().getAllAsArray(), User.readableColumnName);
-            redrawComboBox(User.readableColumnName);
+            redrawTable(daoFactory.getUserDao().getAllAsArray(), UserUtils.readableColumnName);
+            redrawComboBox(UserUtils.readableColumnName);
             searchTextField.setText("");
             updateButton.setEnabled(true);
             deleteButton.setEnabled(true);
@@ -149,8 +145,8 @@ public class MainGui extends JFrame {
     private void changeToHistoryState() {
         try {
             guiState = GuiState.HISTORY;
-            redrawTable(daoFactory.getHistoryDao().getAllAsArray(), History.readableColumnName);
-            redrawComboBox(History.readableColumnName);
+            redrawTable(daoFactory.getHistoryDao().getAllAsArray(), HistoryUtils.readableColumnName);
+            redrawComboBox(HistoryUtils.readableColumnName);
             searchTextField.setText("");
             updateButton.setEnabled(false);
             deleteButton.setEnabled(false);
@@ -162,22 +158,22 @@ public class MainGui extends JFrame {
     private void search() {
         if (guiState == GuiState.BOOKS) {
             try {
-                List<Book> data = daoFactory.getBookDao().queryForEq(Book.queryColumnName[searchComboBox.getSelectedIndex()], searchTextField.getText());
-                redrawTable(Book.convertToArray(data), Book.readableColumnName);
+                List<Book> data = daoFactory.getBookDao().queryForEq(BookUtils.queryColumnName[searchComboBox.getSelectedIndex()], searchTextField.getText());
+                redrawTable(BookUtils.convertToArray(data), BookUtils.readableColumnName);
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else if (guiState == GuiState.USERS) {
             try {
-                List<User> data = daoFactory.getUserDao().queryForEq(User.queryColumnName[searchComboBox.getSelectedIndex()], searchTextField.getText());
-                redrawTable(User.convertToArray(data), User.readableColumnName);
+                List<User> data = daoFactory.getUserDao().queryForEq(UserUtils.queryColumnName[searchComboBox.getSelectedIndex()], searchTextField.getText());
+                redrawTable(UserUtils.convertToArray(data), UserUtils.readableColumnName);
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else if (guiState == GuiState.HISTORY) {
             try {
-                List<History> data = daoFactory.getHistoryDao().queryForEq(History.queryColumnName[searchComboBox.getSelectedIndex()], searchTextField.getText());
-                redrawTable(History.convertToArray(data), History.readableColumnName);
+                List<History> data = daoFactory.getHistoryDao().queryForEq(HistoryUtils.queryColumnName[searchComboBox.getSelectedIndex()], searchTextField.getText());
+                redrawTable(HistoryUtils.convertToArray(data), HistoryUtils.readableColumnName);
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }

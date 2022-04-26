@@ -3,11 +3,12 @@ package dao;
 import entity.User;
 import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.support.ConnectionSource;
+import entityutils.UserUtils;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserDao extends BaseDaoImpl<User, Integer> implements DaoInstance {
+public class UserDao extends BaseDaoImpl<User, Integer> {
     public UserDao(ConnectionSource connectionSource) throws SQLException {
         super(connectionSource, User.class);
     }
@@ -19,6 +20,6 @@ public class UserDao extends BaseDaoImpl<User, Integer> implements DaoInstance {
      * @throws SQLException if SQL query failed.
      */
     public Object[][] getAllAsArray() throws SQLException {
-        return User.convertToArray(queryForAll());
+        return UserUtils.convertToArray(queryForAll());
     }
 }

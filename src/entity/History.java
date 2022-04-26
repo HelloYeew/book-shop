@@ -1,10 +1,9 @@
 package entity;
-import com.j256.ormlite.field.ForeignCollectionField;
+
 import dao.HistoryDao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.util.List;
 
 /**
  * Class represent history of the shop.
@@ -28,10 +27,6 @@ public class History implements Entity {
      */
     @DatabaseField(foreign = true, columnName = "book_id")
     private Book book;
-
-    public static String[] readableColumnName = {"ID", "Buyer ID", "Book ID"};
-
-    public static String[] queryColumnName = {"id", "buyer_id", "book_id"};
 
     /**
      * Create a new history.
@@ -67,20 +62,5 @@ public class History implements Entity {
 
     public String toString() {
         return "History: " + this.id + " " + this.buyer.getUsername() + " " + this.book.getTitle();
-    }
-
-    public static Object[][] convertToArray(List<History> histories) {
-        Object[][] data = new Object[histories.size()][];
-        for (int i = 0; i < histories.size(); i++) {
-            History history = histories.get(i);
-            data[i] = new Object[]{history.getId(), history.getBuyer().getId(), history.getBook().getId()};
-        }
-        return data;
-    }
-
-    public static Object[][] convertToArray(History history) {
-        Object[][] data = new Object[1][];
-        data[0] = new Object[]{history.getId(), history.getBuyer().getId(), history.getBook().getId()};
-        return data;
     }
 }
