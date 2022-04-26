@@ -88,14 +88,17 @@ You can change your database connection URL by change `databaseUrl` in `MainGUI.
 
 ## Run the GUI with IntelliJ IDEA
 
-Normally after you clone the repository and open this project in IntelliJ IDEA, everything is getting ready except the JDK version. You can set it via the notification after you open the `src/gui/MainGUI.java` file 
-or you can set it manually by go to `File > Project Structure > Project` or `Ctrl + Alt + Shift + S` and select the JDK version.
+Normally after you clone the repository and open this project in IntelliJ IDEA, everything is getting ready except the JDK version. You can set it via the notification after you open the `src/gui/MainGUI.java` file
+
+![Notification to set JDK version](readme-pics/setup-jdk-notification.png)
+
+Or you can set it manually by go to `File > Project Structure > Project` or use `Ctrl + Alt + Shift + S` and select the JDK version.
 
 ![Set your JDK version](readme-pics/intellij-project-setup.png)
 
 After select JDK version, get in `src/gui/MainGUI.java` and go to the `public static void main(String[] args)` method and click play button to run the GUI.
 
-If IntelliJ cannot detect library or JAR file, you can add it by go to project structure window again then go to `Modules > Dependencies`, click plus sign, select `JARs or Directories` and select 
+If IntelliJ cannot detect project's dependencies or JAR file, you can add it by go to project structure window again then go to `Modules > Dependencies`, click plus sign, select `JARs or Directories` and select 
 `lib` folder inside the project directory to add the JAR file to the project.
 
 ![Add JAR to project](readme-pics/add-jar.png)
