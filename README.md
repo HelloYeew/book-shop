@@ -82,9 +82,11 @@ To reopen the database console, click the database console button, then click `O
 
 ![Reopen the database console](readme-pics/reopen-console.png)
 
-## Run the GUI
+## Configuration
 
-### Run with IntelliJ IDEA
+You can change your database connection URL by change `databaseUrl` in `MainGUI.java` file.
+
+## Run the GUI with IntelliJ IDEA
 
 Normally after you clone the repository and open this project in IntelliJ IDEA, everything is getting ready except the JDK version. You can set it via the notification after you open the `src/gui/MainGUI.java` file 
 or you can set it manually by go to `File > Project Structure > Project` or `Ctrl + Alt + Shift + S` and select the JDK version.
