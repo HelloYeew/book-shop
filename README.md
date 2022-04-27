@@ -106,3 +106,7 @@ If IntelliJ cannot detect project's dependencies or JAR file, you can add it by 
 `lib` folder inside the project directory to add the JAR file to the project.
 
 ![Add JAR to project](readme-pics/add-jar.png)
+
+## Information on the code
+
+I add JavaDoc to all class and some part that sometime hard to understand to make it easier to understand. You can explore the code and read the JavaDoc for better understanding that how the code works.
