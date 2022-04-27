@@ -14,10 +14,14 @@ public class GuiStateUtils {
      * @return The table column size of the current table.
      */
     public static int getColumnSize(GuiState state) {
-        return switch (state) {
-            case BOOKS -> BookUtils.queryColumnName.length;
-            case USERS -> UserUtils.queryColumnName.length;
-            case HISTORY -> HistoryUtils.queryColumnName.length;
+        switch (state) {
+            case BOOKS:
+                return BookUtils.queryColumnName.length;
+            case USERS:
+                return UserUtils.queryColumnName.length;
+            case HISTORY:
+                return HistoryUtils.queryColumnName.length;
         };
+        throw new IllegalStateException("No state available");
     }
 }
