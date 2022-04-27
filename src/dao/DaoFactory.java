@@ -59,7 +59,7 @@ public class DaoFactory {
     }
 
     /**
-     * Generate the UserDao from the connection source
+     * Return the generated userDao
      * @return the generated UserDao
      */
     public UserDao getUserDao() {
@@ -67,7 +67,7 @@ public class DaoFactory {
     }
 
     /**
-     * Generate the BookDao from the connection source
+     * Return the generated bookDao
      * @return the generated BookDao
      */
     public BookDao getBookDao() {
@@ -75,7 +75,7 @@ public class DaoFactory {
     }
 
     /**
-     * Generate the HistoryDao from the connection source
+     * Return the generated historyDao
      * @return the generated HistoryDao
      */
     public HistoryDao getHistoryDao() {
