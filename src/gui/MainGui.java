@@ -133,12 +133,12 @@ public class MainGui extends JFrame {
         refreshButton.addActionListener(e -> refresh());
         bottomButtonPanel.add(refreshButton);
         addButton = new JButton("Add");
-        addButton.addActionListener(e -> new AddWindow());
+        addButton.addActionListener(e -> new AddWindow(this));
         bottomButtonPanel.add(addButton);
         updateButton = new JButton("Update");
-        updateButton.addActionListener(e -> new UpdateWindow());
+        updateButton.addActionListener(e -> new UpdateWindow(this));
         deleteButton = new JButton("Delete");
-        deleteButton.addActionListener(e -> new DeleteWindow());
+        deleteButton.addActionListener(e -> new DeleteWindow(this));
         bottomButtonPanel.add(addButton);
         bottomButtonPanel.add(updateButton);
         bottomButtonPanel.add(deleteButton);
@@ -207,12 +207,12 @@ public class MainGui extends JFrame {
     private void changeToHistoryState() {
         try {
             guiState = GuiState.HISTORY;
-            redrawTable(HistoryUtils.convertToArray(daoFactory.getHistoryDao().queryForAll()), HistoryUtils.readableColumnName);
+            redrawTable(HistoryUtils.convertToArray(daoFactory.getHistoryDao().queryForAll(), daoFactory), HistoryUtils.readableColumnName);
             redrawComboBox(HistoryUtils.readableColumnName);
             searchTextField.setText("");
             updateButton.setEnabled(false);
             deleteButton.setEnabled(false);
-        } catch (SQLException e) {
+        } catch (SQLException | RuntimeException e) {
             JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -238,8 +238,8 @@ public class MainGui extends JFrame {
         } else if (guiState == GuiState.HISTORY) {
             try {
                 List<History> data = daoFactory.getHistoryDao().queryForEq(HistoryUtils.queryColumnName[searchComboBox.getSelectedIndex()], searchTextField.getText());
-                redrawTable(HistoryUtils.convertToArray(data), HistoryUtils.readableColumnName);
-            } catch (SQLException e) {
+                redrawTable(HistoryUtils.convertToArray(data, daoFactory), HistoryUtils.readableColumnName);
+            } catch (SQLException | RuntimeException e) {
                 JOptionPane.showMessageDialog(this, "Error on database query\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -248,7 +248,7 @@ public class MainGui extends JFrame {
     /**
      * Refresh the table
      */
-    private void refresh() {
+    public void refresh() {
         if (guiState == GuiState.BOOKS) {
             changeToBookState();
         } else if (guiState == GuiState.USERS) {

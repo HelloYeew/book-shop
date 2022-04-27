@@ -21,7 +21,7 @@ public class UpdateWindow extends JFrame {
     /**
      * Constructor for UpdateWindow.
      */
-    public UpdateWindow() {
+    public UpdateWindow(MainGui mainGui) {
         if (MainGui.guiState == GuiState.BOOKS) {
             setTitle("Update Book");
         } else if (MainGui.guiState == GuiState.USERS) {
@@ -62,7 +62,8 @@ public class UpdateWindow extends JFrame {
             updateButton.addActionListener(e -> {
                 try {
                     MainGui.daoFactory.getBookDao().update(new Book(Integer.parseInt(bookIdTextField.getText()), titleTextField.getText(), authorTextField.getText(), genreTextField.getText(), subgenreTextField.getText(), Integer.parseInt(heightTextField.getText()), publisherTextField.getText(), Double.parseDouble(priceTextField.getText())));
-                    JOptionPane.showMessageDialog(this, "Book updated successfully\nPlease click on the 'Refresh' button to see the changes");
+                    JOptionPane.showMessageDialog(this, "Book updated successfully!");
+                    mainGui.refresh();
                     dispose();
                 } catch (NumberFormatException | SQLException ex) {
                     JOptionPane.showMessageDialog(this, "Error on updating book to database\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -201,7 +202,8 @@ public class UpdateWindow extends JFrame {
                 try {
                     if (!usernameTextField.getText().equals("")) {
                         MainGui.daoFactory.getUserDao().update(new User(Integer.parseInt(userIdTextField.getText()),usernameTextField.getText()));
-                        JOptionPane.showMessageDialog(this, "User updated successfully\nPlease click on the 'Refresh' button to see the changes");
+                        JOptionPane.showMessageDialog(this, "User updated successfully!");
+                        mainGui.refresh();
                         dispose();
                     } else {
                         JOptionPane.showMessageDialog(this, "Username cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);

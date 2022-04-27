@@ -21,7 +21,7 @@ public class DeleteWindow extends JFrame {
     /**
      * Constructor for DeleteWindow.
      */
-    public DeleteWindow() {
+    public DeleteWindow(MainGui mainGui) {
         if (MainGui.guiState == GuiState.BOOKS) {
             setTitle("Delete Book");
         } else if (MainGui.guiState == GuiState.USERS) {
@@ -73,7 +73,8 @@ public class DeleteWindow extends JFrame {
             deleteButton.addActionListener(e -> {
                 try {
                     MainGui.daoFactory.getBookDao().delete(new Book(Integer.parseInt(bookIdTextField.getText()), titleTextField.getText(), authorTextField.getText(), genreTextField.getText(), subgenreTextField.getText(), Integer.parseInt(heightTextField.getText()), publisherTextField.getText(), Double.parseDouble(priceTextField.getText())));
-                    JOptionPane.showMessageDialog(this, "Book deleted successfully\nPlease click on the 'Refresh' button to see the changes");
+                    JOptionPane.showMessageDialog(this, "Book deleted successfully!");
+                    mainGui.refresh();
                     dispose();
                 } catch (NumberFormatException | SQLException ex) {
                     JOptionPane.showMessageDialog(this, "Error on deleting book from database\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -212,7 +213,8 @@ public class DeleteWindow extends JFrame {
             deleteButton.addActionListener(e -> {
                 try {
                     MainGui.daoFactory.getUserDao().delete(new User(Integer.parseInt(userIdTextField.getText()),usernameTextField.getText()));
-                    JOptionPane.showMessageDialog(this, "User deleted successfully\nPlease click on the 'Refresh' button to see the changes");
+                    JOptionPane.showMessageDialog(this, "User deleted successfully!");
+                    mainGui.refresh();
                     dispose();
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(this, "Error on deleting user from database\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

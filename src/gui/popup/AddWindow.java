@@ -18,7 +18,7 @@ public class AddWindow extends JFrame {
     /**
      * Constructor for the AddWindow.
      */
-    public AddWindow() {
+    public AddWindow(MainGui mainGui) {
         if (MainGui.guiState == GuiState.BOOKS) {
             setTitle("Add Book");
         } else if (MainGui.guiState == GuiState.USERS) {
@@ -58,7 +58,8 @@ public class AddWindow extends JFrame {
             addButton.addActionListener(e -> {
                 try {
                     MainGui.daoFactory.getBookDao().create(new Book(titleTextField.getText(), authorTextField.getText(), genreTextField.getText(), subgenreTextField.getText(), Integer.parseInt(heightTextField.getText()), publisherTextField.getText(), Double.parseDouble(priceTextField.getText())));
-                    JOptionPane.showMessageDialog(this, "Book added successfully\nPlease click on the 'Refresh' button to see the changes");
+                    JOptionPane.showMessageDialog(this, "Book added successfully!");
+                    mainGui.refresh();
                     dispose();
                 } catch (NumberFormatException | SQLException ex) {
                     JOptionPane.showMessageDialog(this, "Error on adding book to database\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -72,7 +73,8 @@ public class AddWindow extends JFrame {
                 try {
                     if (!usernameTextField.getText().equals("")) {
                         MainGui.daoFactory.getUserDao().create(new User(usernameTextField.getText()));
-                        JOptionPane.showMessageDialog(this, "User added successfully\nPlease click on the 'Refresh' button to see the changes");
+                        JOptionPane.showMessageDialog(this, "User added successfully!");
+                        mainGui.refresh();
                         dispose();
                     } else {
                         JOptionPane.showMessageDialog(this, "Username cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
@@ -91,7 +93,8 @@ public class AddWindow extends JFrame {
             addButton.addActionListener(e -> {
                 try {
                     MainGui.daoFactory.getHistoryDao().create(new History(MainGui.daoFactory.getUserDao().queryForId(Integer.parseInt(userIdTextField.getText())), MainGui.daoFactory.getBookDao().queryForId(Integer.parseInt(bookIdTextField.getText()))));
-                    JOptionPane.showMessageDialog(this, "History added successfully\nPlease click on the 'Refresh' button to see the changes");
+                    JOptionPane.showMessageDialog(this, "History added successfully!");
+                    mainGui.refresh();
                     dispose();
                 } catch (NumberFormatException | SQLException | NullPointerException ex) {
                     JOptionPane.showMessageDialog(this, "Error on adding history to database\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
