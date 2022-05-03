@@ -110,3 +110,7 @@ If IntelliJ cannot detect project's dependencies or JAR file, you can add it by 
 ## Information on the code
 
 I add JavaDoc to all class and some part that sometime hard to understand to make it easier to understand. You can explore the code and read the JavaDoc for better understanding that how the code works.
+
+## Web service API
+
+The info about the web service is [in web-service.md file](web-service.md).
