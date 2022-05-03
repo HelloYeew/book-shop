@@ -69,7 +69,7 @@ Status code 200:
     "height": 228,
     "publisher": "Wiley",
     "price": 8.92
-  }, {...}. {...},
+  }, {...}, {...}
 ]
 ```
 
@@ -349,7 +349,7 @@ Status code 200:
   {
     "id": 1,
     "username": "Kasumi"
-  }, {...}. {...},
+  }, {...}, {...},
 ]
 ```
 
@@ -665,7 +665,7 @@ Status code 200:
         "publisher": "Wiley",
         "price": 8.92
     }
-  }, {...}. {...},
+  }, {...}, {...},
 ]
 ```
 
