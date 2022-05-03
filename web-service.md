@@ -10,7 +10,7 @@ The web service provide access to our application via RESTful API. Both customer
 
 ## Authentication
 
-Some API endpoint require authentication. You must get the authentication token from the system first before you can access the API that require authentication.
+Some API endpoint require authentication token. Authentication token is in the form of a very long mix of string and number. You must get the authentication token from the system first before you can access the API that require authentication.
 
 ## API list
 
@@ -728,8 +728,6 @@ Status code 503:
   "message": "Service unavailable"
 }
 ```
-
---------------------------------------------
 
 ## Objects structure
 
