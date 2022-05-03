@@ -600,7 +600,7 @@ This endpoint also support query parameters. If query parameters get filled, it 
 
 If the result is blank, it will return a blank list `[]`.
 
-See more info on response data format in [book object structure](#book).
+See more info on response data format in [object structure](#objects-structure).
 
     GET /api/purchase
 
@@ -626,8 +626,6 @@ Note that the data parameters are optional. You can omit the header parameters i
 | `book_price`     | real   | The price of the book                             |
 | `user_id`        | int    | The unique identifier of the user in the database |
 | `username`       | string | The user's username who purchased the book        |
-
-
 
 #### HTTP response status code
 
