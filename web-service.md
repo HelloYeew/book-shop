@@ -895,7 +895,6 @@ Status code 503:
 
 The components that represents a book in the shop's database. It contains the following attributes:
 
--------------------------------
 | name        | type   | description                                       |
 |-------------|--------|---------------------------------------------------|
 | `id`        | int    | the unique identifier of the book in the database |
