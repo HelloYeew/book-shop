@@ -43,6 +43,7 @@ Note that the data parameters are optional. You can omit the header parameters i
 #### HTTP response status code
 
 - 200: Success
+- 400: Bad request
 - 503: Service unavailable
 
 #### Example usage via `curl`
@@ -73,6 +74,14 @@ Status code 200:
 ]
 ```
 
+Status code 400:
+
+```json
+{
+  "message": "Failed to get book list. Please check your query parameters or try again later."
+}
+```
+
 Status code 503:
 
 ```json
@@ -96,6 +105,7 @@ See more info on response data format in [book object structure](#book).
 #### HTTP response status code
 
 - 200: Success
+- 400: Bad request
 - 404: Book not found
 - 503: Service unavailable
 
@@ -119,6 +129,14 @@ Status code 200:
     "height": 228,
     "publisher": "Wiley",
     "price": 8.92
+}
+```
+
+Status code 400:
+
+```json
+{
+  "message": "Failed to get book. Please check your query parameters or try again later."
 }
 ```
 
@@ -162,6 +180,7 @@ In this endpoint, you must fill all the data parameters below:
 #### HTTP response status code
 
 - 200: Success
+- 400: Bad request
 - 403: Forbidden
 - 503: Service unavailable
 
@@ -178,6 +197,14 @@ Status code 200:
 ```json
 {
   "message": "Book added successfully"
+}
+```
+
+Status code 400:
+
+```json
+{
+  "message": "Failed to add book"
 }
 ```
 
@@ -227,7 +254,9 @@ Optional parameters (information that will be updated):
 #### HTTP response status code
 
 - 200: Success
+- 400: Bad request
 - 403: Forbidden
+- 404: Not found
 - 503: Service unavailable
 
 #### Example usage via `curl`
@@ -246,11 +275,27 @@ Status code 200:
 }
 ```
 
+Status code 400:
+
+```json
+{
+  "message": "Failed to update book"
+}
+```
+
 Status code 403:
 
 ```json
 {
   "message": "You don't have permission to do this"
+}
+```
+
+Status code 404:
+
+```json
+{
+  "message": "Target book to update not found"
 }
 ```
 
@@ -280,7 +325,9 @@ All the data parameters are required:
 #### HTTP response status code
 
 - 200: Success
+- 400: Bad request
 - 403: Forbidden
+- 404: Not found
 - 503: Service unavailable
 
 #### Example usage via `curl`
@@ -299,11 +346,27 @@ Status code 200:
 }
 ```
 
+Status code 400:
+
+```json
+{
+  "message": "Failed to delete book"
+}
+```
+
 Status code 403:
 
 ```json
 {
   "message": "You don't have permission to do this"
+}
+```
+
+Status code 404:
+
+```json
+{
+  "message": "Target book to delete not found"
 }
 ```
 
@@ -328,6 +391,7 @@ See more info on response data format in [user object structure](#user).
 #### HTTP response status code
 
 - 200: Success
+- 400: Bad request
 - 403: Forbidden
 - 503: Service unavailable
 
@@ -351,6 +415,14 @@ Status code 200:
     "username": "Kasumi"
   }, {...}, {...},
 ]
+```
+
+Status code 400:
+
+```json
+{
+  "message": "Failed to get user list"
+}
 ```
 
 Status code 403:
@@ -389,6 +461,7 @@ At least one of the data parameters is required:
 #### HTTP response status code
 
 - 200: Success
+- 400: Bad request
 - 403: Forbidden
 - 404: User not found
 - 503: Service unavailable
@@ -407,6 +480,14 @@ Status code 200:
 {
     "id": 1,
     "username": "Kasumi"
+}
+```
+
+Status code 400:
+
+```json
+{
+  "message": "Failed to get user, please check your query parameters or try again later"
 }
 ```
 
@@ -451,7 +532,9 @@ In this endpoint, you must fill all the data parameters below:
 #### HTTP response status code
 
 - 200: Success
+- 400: Bad request
 - 403: Forbidden
+- 409: Conflict (username already exists)
 - 503: Service unavailable
 
 #### Example usage via `curl`
@@ -470,11 +553,27 @@ Status code 200:
 }
 ```
 
+Status code 400:
+
+```json
+{
+  "message": "Failed to add user"
+}
+```
+
 Status code 403:
 
 ```json
 {
   "message": "You don't have permission to do this"
+}
+```
+
+Status code 409:
+
+```json
+{
+  "message": "Username already exists"
 }
 ```
 
@@ -505,7 +604,10 @@ All the data parameters are required since the user's information only have user
 #### HTTP response status code
 
 - 200: Success
+- 400: Bad request
 - 403: Forbidden
+- 404: User not found
+- 409: Conflict (username already exists)
 - 503: Service unavailable
 
 #### Example usage via `curl`
@@ -524,11 +626,35 @@ Status code 200:
 }
 ```
 
+Status code 400:
+
+```json
+{
+  "message": "Failed to update user"
+}
+```
+
 Status code 403:
 
 ```json
 {
   "message": "You don't have permission to do this"
+}
+```
+
+Status code 404:
+
+```json
+{
+  "message": "Target user not found"
+}
+```
+
+Status code 409:
+
+```json
+{
+  "message": "Username that you want to update already exists"
 }
 ```
 
@@ -558,7 +684,9 @@ All the data parameters are required:
 #### HTTP response status code
 
 - 200: Success
+- 400: Bad request
 - 403: Forbidden
+- 404: User not found
 - 503: Service unavailable
 
 #### Example usage via `curl`
@@ -577,11 +705,27 @@ Status code 200:
 }
 ```
 
+Status code 400:
+
+```json
+{
+  "message": "Failed to delete user"
+}
+```
+
 Status code 403:
 
 ```json
 {
   "message": "You don't have permission to do this"
+}
+```
+
+Status code 404:
+
+```json
+{
+  "message": "Target user not found"
 }
 ```
 
@@ -630,6 +774,7 @@ Note that the data parameters are optional. You can omit the header parameters i
 #### HTTP response status code
 
 - 200: Success
+- 400: Bad request
 - 503: Service unavailable
 
 #### Example usage via `curl`
@@ -667,6 +812,14 @@ Status code 200:
 ]
 ```
 
+Status code 400:
+
+```json
+{
+  "message": "Failed to get purchase history, please try again later"
+}
+```
+
 Status code 503:
 
 ```json
@@ -692,6 +845,7 @@ Add a new purchase history to the database. This endpoint require authentication
 #### HTTP response status code
 
 - 200: Success
+- 400: Bad request
 - 403: Forbidden
 - 503: Service unavailable
 
@@ -708,6 +862,14 @@ Status code 200:
 ```json
 {
   "message": "History added successfully"
+}
+```
+
+Status code 400:
+
+```json
+{
+  "message": "Failed to add purchase history"
 }
 ```
 
